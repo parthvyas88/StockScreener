@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Indian DMA Screener</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Indian Market Alert Console</p>
+          <h1>50/200 DMA value screener</h1>
+          <p class="subtle">
+            Live NSE/BSE prices against your curated 2026 basket with cashflow and P/E quality filters.
+          </p>
+        </div>
+        <div class="topbar-actions">
+          <button id="notifyButton" class="secondary-button">Enable notifications</button>
+          <div class="timestamp-card">
+            <span>Last refresh</span>
+            <strong id="lastRefresh">Waiting for first tick</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero-grid">
+        <article class="summary-card alert">
+          <span class="label">Alerts now</span>
+          <strong id="alertCount">0</strong>
+          <small id="alertSplit">0 below 50 DMA / 0 below 200 DMA</small>
+        </article>
+        <article class="summary-card">
+          <span class="label">Qualified universe</span>
+          <strong id="qualifiedCount">0</strong>
+          <small>Filtered by cashflow and valuation</small>
+        </article>
+        <article class="summary-card">
+          <span class="label">Live coverage</span>
+          <strong id="liveCount">0</strong>
+          <small>Symbols with active market quotes</small>
+        </article>
+        <article class="summary-card">
+          <span class="label">Strongest discount</span>
+          <strong id="deepestSignal">None</strong>
+          <small id="deepestSignalMeta">Waiting for screening result</small>
+        </article>
+      </section>
+
+      <section class="control-panel">
+        <div class="control-group">
+          <label for="maxPe">Max P/E</label>
+          <input id="maxPe" type="range" min="5" max="80" step="1" value="35" />
+          <strong id="maxPeValue">35</strong>
+        </div>
+        <div class="control-group">
+          <label for="minFcf">Min free cash flow</label>
+          <input id="minFcf" type="number" value="0" step="100" />
+        </div>
+        <div class="control-group">
+          <label for="minOcf">Min operating cash flow</label>
+          <input id="minOcf" type="number" value="0" step="100" />
+        </div>
+        <div class="control-group">
+          <label for="pollInterval">Refresh every</label>
+          <select id="pollInterval">
+            <option value="5">5 sec</option>
+            <option value="10" selected>10 sec</option>
+            <option value="15">15 sec</option>
+            <option value="30">30 sec</option>
+            <option value="60">60 sec</option>
+          </select>
+        </div>
+        <div class="control-group checkbox-row">
+          <label for="requireIndustryPe">Require P/E below industry P/E</label>
+          <input id="requireIndustryPe" type="checkbox" checked />
+        </div>
+        <div class="control-group checkbox-row">
+          <label for="showOnlyAlerts">Show only live alerts</label>
+          <input id="showOnlyAlerts" type="checkbox" />
+        </div>
+      </section>
+
+      <section class="status-strip">
+        <div id="marketStatus" class="pill neutral">Loading market feed</div>
+        <div id="feedStatus" class="pill neutral">Preparing symbols</div>
+        <div class="pill">Source: NSE India and BSE India via Cloudflare function</div>
+      </section>
+
+      <section class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Stock</th>
+              <th>Live</th>
+              <th>50 DMA</th>
+              <th>200 DMA</th>
+              <th>Signal</th>
+              <th>P/E</th>
+              <th>FCF</th>
+              <th>OCF 3Y</th>
+              <th>Change</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <template id="rowTemplate">
+      <tr>
+        <td class="stock-cell">
+          <div class="stock-name"></div>
+          <div class="stock-symbol"></div>
+        </td>
+        <td class="live-price"></td>
+        <td class="dma50"></td>
+        <td class="dma200"></td>
+        <td class="signal"></td>
+        <td class="pe"></td>
+        <td class="fcf"></td>
+        <td class="ocf"></td>
+        <td class="change"></td>
+        <td class="updated"></td>
+      </tr>
+    </template>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

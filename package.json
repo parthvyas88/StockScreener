@@ -1,0 +1,11 @@
+{
+  "name": "india-dma-screener",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Single-screen Indian stock screener with live DMA alerts",
+  "scripts": {
+    "start": "node server.js",
+    "cf:dev": "npx wrangler pages dev public",
+    "cf:deploy": "npx wrangler pages deploy public"
+  }
+}
